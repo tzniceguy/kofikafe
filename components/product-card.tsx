@@ -1,5 +1,6 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, Pressable } from "react-native";
+import { useRouter } from "expo-router";
 
 type ProductCardProps = {
   image: string;
@@ -14,39 +15,53 @@ export default function ProductCard({
   price,
   category,
 }: ProductCardProps) {
+  const router = useRouter();
   return (
-    <View style={styles.card}>
+    <Pressable
+      style={styles.card}
+      onPress={() =>
+        router.push({
+          pathname: "../products/[id]",
+          params: { id: name },
+        })
+      }
+    >
       <View style={styles.imageContainer}>
-        <Image source={{ uri: image }} style={styles.image} />
+        <Image
+          source={{ uri: image }}
+          style={styles.image}
+          resizeMode="cover"
+        />
       </View>
       <View style={styles.productInfo}>
         <Text style={styles.productTitle}>{name}</Text>
         <Text style={styles.productPrice}>{category}</Text>
         <Text style={styles.productPrice}>Tsh: {price}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     width: "48%",
-    height: 200,
+    height: 220,
     backgroundColor: "white",
     borderRadius: 10,
+    elevation: 2,
     marginVertical: 8,
   },
   imageContainer: {
     width: "100%",
-    height: "65%",
+    height: "60%",
     backgroundColor: "gray",
-    borderRadius: 10,
-    marginBottom: 8,
+    borderTopLeftRadius: 10, // Match card radius
+    borderTopRightRadius: 10,
+    overflow: "hidden",
   },
   image: {
-    width: 100,
-    height: 100,
-    resizeMode: "cover",
+    width: "100%",
+    height: "100%",
   },
   productInfo: {
     padding: 8,
@@ -55,6 +70,7 @@ const styles = StyleSheet.create({
   productTitle: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#333",
   },
   productPrice: {
     fontSize: 14,
