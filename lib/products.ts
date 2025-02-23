@@ -1,4 +1,11 @@
-export const products = [
+type Product = {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  category: string;
+};
+export const products: Product[] = [
   { id: 1, name: "capuccino", image: "", price: 1000, category: "Coffee" },
   { id: 2, name: "latte", image: "", price: 1000, category: "Coffee" },
   { id: 3, name: "espresso", image: "", price: 1000, category: "Coffee" },
