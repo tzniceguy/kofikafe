@@ -1,9 +1,16 @@
 import React from "react";
-import { View, StyleSheet, Text, Image, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Pressable,
+  ImageSourcePropType,
+} from "react-native";
 import { useRouter } from "expo-router";
 
 type ProductCardProps = {
-  image: string;
+  image: ImageSourcePropType;
   name: string;
   price: number;
   category: string;
@@ -27,11 +34,7 @@ export default function ProductCard({
       }
     >
       <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: image }}
-          style={styles.image}
-          resizeMode="cover"
-        />
+        <Image source={image} style={styles.image} resizeMode="cover" />
       </View>
       <View style={styles.productInfo}>
         <Text style={styles.productTitle}>{name}</Text>
@@ -53,9 +56,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: "100%",
-    height: "60%",
-    backgroundColor: "gray",
-    borderTopLeftRadius: 10, // Match card radius
+    height: "60%", // Match card radius
     borderTopRightRadius: 10,
     overflow: "hidden",
   },
