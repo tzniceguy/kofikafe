@@ -7,6 +7,7 @@ import {
   Pressable,
 } from "react-native";
 import { Settings2 } from "lucide-react-native";
+import ProductCatalogue from "@/components/product-catalogue";
 
 const categories = [
   { id: 1, name: "americano" },
@@ -36,6 +37,7 @@ export default function () {
             <Text key={category.id}>{category.name}</Text>
           ))}
         </View>
+        <ProductCatalogue />
       </View>
     </SafeAreaView>
   );
