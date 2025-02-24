@@ -38,7 +38,7 @@ export default function ProductCard({
       </View>
       <View style={styles.productInfo}>
         <Text style={styles.productTitle}>{name}</Text>
-        <Text style={styles.productPrice}>{category}</Text>
+        <Text style={styles.productCategory}>{category}</Text>
         <Text style={styles.productPrice}>Tsh: {price}</Text>
       </View>
     </Pressable>
@@ -50,14 +50,14 @@ const styles = StyleSheet.create({
     width: "48%",
     height: 220,
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 12,
     elevation: 2,
     marginVertical: 8,
   },
   imageContainer: {
     width: "100%",
     height: "60%", // Match card radius
-    borderTopRightRadius: 10,
+    borderRadius: 10,
     overflow: "hidden",
   },
   image: {
@@ -73,9 +73,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
   },
-  productPrice: {
+  productCategory: {
     fontSize: 14,
     color: "gray",
+  },
+  productPrice: {
+    fontSize: 14,
+    color: "#000",
     fontWeight: "bold",
   },
 });
