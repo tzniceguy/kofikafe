@@ -1,9 +1,20 @@
 import { products } from "@/lib/products";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { SafeAreaView, Text, StyleSheet, Image, View } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  Pressable,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { ArrowLeft, Heart } from "lucide-react-native";
+import Header from "@/components/header";
 
 export default function ProductDetail() {
+  const router = useRouter();
   const { id } = useLocalSearchParams();
   const productDetail = products.find((product) => product.name === id);
 
@@ -17,17 +28,17 @@ export default function ProductDetail() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={{ uri: productDetail.image }}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <View style={styles.info}>
-        <Text style={styles.name}>{productDetail.name}</Text>
-        <Text style={styles.category}>{productDetail.category}</Text>
-        <Text style={styles.price}>
-          Tsh {productDetail.price.toLocaleString()}
-        </Text>
+      <Header />
+      <View style={styles.productCard}>
+        <Image
+          source={productDetail.image}
+          style={styles.image}
+          resizeMode="cover"
+        />
+        <View style={styles.productInfo}>
+          <Text style={styles.name}>{productDetail.name}</Text>
+          <Text style={styles.category}>{productDetail.category}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -35,20 +46,22 @@ export default function ProductDetail() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 20,
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+  },
+  productCard: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
   },
   image: {
     width: "100%",
     height: "50%",
     borderRadius: 10,
     marginBottom: 20,
+    backgroundColor: "gray",
+    justifyContent: "flex-start",
   },
-  info: {
-    width: "100%",
-    alignItems: "center",
-  },
+  productInfo: {},
   name: {
     fontSize: 24,
     fontWeight: "bold",
