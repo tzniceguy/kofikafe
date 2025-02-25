@@ -31,7 +31,7 @@ export default function ProductDetail() {
 
   return (
     <SafeAreaView>
-      <Header />
+      <Header title="Product Detail" showFavoriteIcon />
       <View style={styles.container}>
         <View style={styles.productCard}>
           <View>
