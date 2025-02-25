@@ -24,10 +24,7 @@ export default function Index() {
           welcome to our cozy coffee corner, where everycup is delightful for
           you
         </Text>
-        <Pressable
-          style={styles.button}
-          onPress={() => router.push("/(screens)")}
-        >
+        <Pressable style={styles.button} onPress={() => router.push("/(tabs)")}>
           <Text style={styles.buttonText}>Get Started</Text>
         </Pressable>
       </View>
