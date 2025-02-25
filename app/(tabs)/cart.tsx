@@ -1,21 +1,204 @@
-import React from "react";
-import { SafeAreaView, View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import Header from "@/components/header";
+import { Wallet } from "lucide-react-native";
 
 export default function Page() {
+  const [selected, setSelected] = useState("deliver");
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
+    <SafeAreaView style={styles.safeArea}>
+      <Header title="Order" />
       <View style={styles.container}>
-        <Text>Cart</Text>
+        <View style={styles.method}>
+          <TouchableOpacity
+            style={[
+              styles.methodOption,
+              selected === "deliver" && styles.selectedOption,
+            ]}
+            onPress={() => setSelected("deliver")}
+          >
+            <Text
+              style={[
+                styles.methodText,
+                selected === "deliver" && styles.selectedText,
+              ]}
+            >
+              Deliver
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.methodOption,
+              selected === "pickup" && styles.selectedOption,
+            ]}
+            onPress={() => setSelected("pickup")}
+          >
+            <Text
+              style={[
+                styles.methodText,
+                selected === "pickup" && styles.selectedText,
+              ]}
+            >
+              Pickup
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {selected === "deliver" && (
+          <View style={styles.deliveryAddress}>
+            <Text style={styles.title}>Delivery Address</Text>
+            <View>
+              <Text style={styles.addressText}>
+                1234, 5th Avenue, New York, NY 10029
+              </Text>
+              <View style={styles.buttonContainer}>
+                <Pressable style={styles.button}>
+                  <Text style={styles.buttonText}>Edit</Text>
+                </Pressable>
+                <Pressable style={styles.button}>
+                  <Text style={styles.buttonText}>Add Note</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        )}
+
+        <View style={styles.paymentSection}>
+          <Text style={styles.title}>Payment Method</Text>
+          <View style={styles.bottomSection}>
+            <Wallet color="#FFA500" size={24} />
+            <View style={styles.walletTextContainer}>
+              <Text style={styles.paymentMethodText}>Cash/Wallet</Text>
+              <Text style={styles.paymentAmountText}>Tsh. 1000</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.orderButtonContainer}>
+          <Pressable style={styles.orderButton}>
+            <Text style={styles.orderButtonText}>Place Order</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: "#fff",
+  },
+  container: {
     paddingHorizontal: 20,
+    flex: 1,
+  },
+  method: {
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 16,
+  },
+  methodOption: {
+    flex: 1,
+    alignItems: "center",
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: "#f5f5f5",
+  },
+  methodText: {
+    fontWeight: "500",
+  },
+  selectedOption: {
+    backgroundColor: "#FFA500",
+  },
+  selectedText: {
+    color: "white",
+    fontWeight: "500",
+  },
+  deliveryAddress: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+    marginVertical: 16,
+    paddingBottom: 16,
+  },
+  title: {
+    fontWeight: "700",
+    fontSize: 18,
+    marginBottom: 8,
+  },
+  addressText: {
+    fontSize: 15,
+    marginBottom: 12,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 10,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#FFA500",
+    alignItems: "center",
+    minWidth: 100,
+  },
+  buttonText: {
+    color: "#FFA500",
+    fontWeight: "500",
+    fontSize: 14,
+  },
+  paymentSection: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+    paddingBottom: 16,
+  },
+  bottomSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#F8F8F8",
+    padding: 12,
+    borderRadius: 8,
+  },
+  walletTextContainer: {
+    marginLeft: 12,
+  },
+  paymentMethodText: {
+    fontWeight: "500",
+    fontSize: 15,
+  },
+  paymentAmountText: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 4,
+  },
+  orderButtonContainer: {
+    marginTop: 24,
+    paddingBottom: 20,
+  },
+  orderButton: {
+    padding: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    backgroundColor: "#FFA500",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  orderButtonText: {
+    color: "white",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });
