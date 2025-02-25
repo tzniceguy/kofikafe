@@ -47,14 +47,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingHorizontal: 20,
   },
   upperContainer: {
     flex: 0.3,
-    paddingVertical: 20,
     backgroundColor: "gray",
     width: "100%",
-    paddingHorizontal: 20,
+    padding: 20,
   },
   search: {
     borderRadius: 10,
