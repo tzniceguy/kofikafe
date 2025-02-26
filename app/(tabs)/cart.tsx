@@ -10,9 +10,11 @@ import {
 } from "react-native";
 import Header from "@/components/header";
 import { Edit, NotepadText, Wallet } from "lucide-react-native";
+import MapComponent from "@/components/map-component";
 
 export default function Page() {
   const [selected, setSelected] = useState("deliver");
+  const [showMap, setShowMap] = useState(false);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -62,7 +64,10 @@ export default function Page() {
                 1234, 5th Avenue, New York, NY 10029
               </Text>
               <View style={styles.buttonContainer}>
-                <Pressable style={styles.button}>
+                <Pressable
+                  style={styles.button}
+                  onPress={() => setShowMap(true)}
+                >
                   <Edit size={16} color="#000" />
                   <Text style={styles.buttonText}>Edit Address</Text>
                 </Pressable>
@@ -71,6 +76,19 @@ export default function Page() {
                   <Text style={styles.buttonText}>Add Note</Text>
                 </Pressable>
               </View>
+            </View>
+          </View>
+        )}
+        {showMap && (
+          <View style={mapOverlayStyles.overlay}>
+            <View style={mapOverlayStyles.mapContainer}>
+              <MapComponent />
+              <Pressable
+                style={mapOverlayStyles.closeButton}
+                onPress={() => setShowMap(false)}
+              >
+                <Text>Close</Text>
+              </Pressable>
             </View>
           </View>
         )}
@@ -312,5 +330,36 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+  },
+});
+
+const mapOverlayStyles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  mapContainer: {
+    width: "90%",
+    height: "70%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    overflow: "hidden",
+    position: "relative",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 20,
+    zIndex: 1001,
   },
 });
