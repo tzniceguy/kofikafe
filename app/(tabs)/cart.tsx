@@ -6,9 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
+  Image,
 } from "react-native";
 import Header from "@/components/header";
-import { Wallet } from "lucide-react-native";
+import { Edit, NotepadText, Wallet } from "lucide-react-native";
 
 export default function Page() {
   const [selected, setSelected] = useState("deliver");
@@ -54,7 +55,7 @@ export default function Page() {
         </View>
 
         {selected === "deliver" && (
-          <View style={styles.deliveryAddress}>
+          <View style={styles.delivery}>
             <Text style={styles.title}>Delivery Address</Text>
             <View>
               <Text style={styles.addressText}>
@@ -62,9 +63,11 @@ export default function Page() {
               </Text>
               <View style={styles.buttonContainer}>
                 <Pressable style={styles.button}>
-                  <Text style={styles.buttonText}>Edit</Text>
+                  <Edit size={16} color="#000" />
+                  <Text style={styles.buttonText}>Edit Address</Text>
                 </Pressable>
                 <Pressable style={styles.button}>
+                  <NotepadText size={16} color="#000" />
                   <Text style={styles.buttonText}>Add Note</Text>
                 </Pressable>
               </View>
@@ -72,13 +75,51 @@ export default function Page() {
           </View>
         )}
 
+        {/* Cart items section */}
+        <View style={styles.cartSection}>
+          <Text style={styles.title}>Order Items</Text>
+          <View style={styles.cartItemContainer}>
+            <View style={styles.cartItem}>
+              <View style={styles.productInfo}>
+                <View style={styles.imageContainer}>
+                  <Text>Image</Text> {/* Replace with actual Image component */}
+                </View>
+                <View style={styles.productDetails}>
+                  <Text style={styles.productName}>Product Name</Text>
+                  <Text style={styles.productDescription}>Product</Text>
+                </View>
+              </View>
+              <View style={styles.quantityContainer}>
+                <Text style={styles.quantityText}>Quantity</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* Payment Summary Section */}
+        <View style={styles.paymentSummary}>
+          <View style={styles.paymentSummaryHeader}>
+            <Text style={styles.title}>Payment Summary</Text>
+          </View>
+          <View style={styles.paymentDetails}>
+            <Text style={styles.paymentDetailText}>Subtotal: Tsh. 1000</Text>
+            {selected === "deliver" && (
+              <Text style={styles.paymentDetailText}>
+                Delivery Fee: Tsh. 500
+              </Text>
+            )}
+          </View>
+        </View>
+
         <View style={styles.paymentSection}>
           <Text style={styles.title}>Payment Method</Text>
           <View style={styles.bottomSection}>
             <Wallet color="#FFA500" size={24} />
             <View style={styles.walletTextContainer}>
               <Text style={styles.paymentMethodText}>Cash/Wallet</Text>
-              <Text style={styles.paymentAmountText}>Tsh. 1000</Text>
+              <Text style={styles.paymentAmountText}>
+                Tsh. {selected === "deliver" ? "1500" : "1000"}
+              </Text>
             </View>
           </View>
         </View>
@@ -124,7 +165,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "500",
   },
-  deliveryAddress: {
+  delivery: {
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
     marginVertical: 16,
@@ -143,24 +184,95 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     marginTop: 10,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
   },
   button: {
-    padding: 10,
-    borderRadius: 8,
+    flexDirection: "row",
+    gap: 6,
+    padding: 6,
+    borderRadius: 15,
     borderWidth: 1,
-    borderColor: "#FFA500",
+    borderColor: "#000",
     alignItems: "center",
     minWidth: 100,
   },
   buttonText: {
-    color: "#FFA500",
+    color: "#000",
     fontWeight: "500",
     fontSize: 14,
+  },
+  cartSection: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+    marginVertical: 16,
+    paddingBottom: 16,
+  },
+  cartItemContainer: {
+    marginVertical: 8,
+  },
+  cartItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eeeeee",
+  },
+  productInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 3,
+  },
+  imageContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 4,
+    backgroundColor: "#f0f0f0",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 12,
+  },
+  productDetails: {
+    flex: 1,
+  },
+  productName: {
+    fontSize: 16,
+    fontWeight: "500",
+    marginBottom: 4,
+  },
+  productDescription: {
+    fontSize: 14,
+    color: "#757575",
+  },
+  quantityContainer: {
+    flex: 1,
+    alignItems: "flex-end",
+  },
+  quantityText: {
+    fontWeight: "500",
   },
   paymentSection: {
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
     paddingBottom: 16,
+  },
+  paymentSummary: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+    marginBottom: 16,
+    paddingBottom: 16,
+  },
+  paymentSummaryHeader: {
+    marginBottom: 8,
+  },
+  paymentDetails: {
+    gap: 8,
+  },
+  paymentDetailText: {
+    fontSize: 15,
+    color: "#333",
   },
   bottomSection: {
     flexDirection: "row",
