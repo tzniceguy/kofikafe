@@ -10,18 +10,22 @@ import {
   Pressable,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ArrowLeft, Heart } from "lucide-react-native";
 import Header from "@/components/header";
-import { Rating } from "react-native-ratings";
 
 export default function ProductDetail() {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const productDetail = products.find((product) => product.name === id);
+  const [selectedSize, setSelectedSize] = React.useState("M");
+
+  //function to add product to cart
+  const buyNow = () => {
+    router.push(`/cart?product=${id}&size=${selectedSize}`);
+  };
 
   if (!productDetail) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView>
         <View style={styles.container}>
           <Text style={styles.errorText}>Product not found</Text>
         </View>
@@ -44,9 +48,6 @@ export default function ProductDetail() {
           <View style={styles.productInfo}>
             <Text style={styles.name}>{productDetail.name}</Text>
             <Text style={styles.category}>{productDetail.category}</Text>
-            <View style={styles.ratingsContainer}>
-              <Rating startingValue={productDetail.ratings} imageSize={20} />
-            </View>
           </View>
         </View>
         <View style={styles.productDescription}>
@@ -61,8 +62,22 @@ export default function ProductDetail() {
             <Text style={styles.sectionTitle}>Size</Text>
             <View style={styles.sizeButtons}>
               {["S", "M", "L"].map((size) => (
-                <Pressable key={size} style={styles.sizeButton}>
-                  <Text style={styles.sizeButtonText}>{size}</Text>
+                <Pressable
+                  key={size}
+                  style={[
+                    styles.sizeButton,
+                    selectedSize === size && styles.selectedSizeButton,
+                  ]}
+                  onPress={() => setSelectedSize(size)}
+                >
+                  <Text
+                    style={[
+                      styles.sizeButtonText,
+                      selectedSize === size && styles.selectedSizeButtonText,
+                    ]}
+                  >
+                    {size}
+                  </Text>
                 </Pressable>
               ))}
             </View>
@@ -86,7 +101,8 @@ export default function ProductDetail() {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "space-between",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   productCard: {
     borderBottomWidth: 1,
@@ -115,13 +131,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "red",
   },
-  ratingsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 8,
-  },
   productDescription: {
     marginTop: 20,
+    paddingVertical: 20,
     gap: 20,
   },
   descriptionSection: {
@@ -159,11 +171,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#000",
   },
+  selectedSizeButton: {
+    backgroundColor: "#000",
+    borderColor: "#000",
+  },
+  selectedSizeButtonText: {
+    color: "#fff",
+    fontWeight: "600",
+  },
   bottomSection: {
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingVertical: 20,
     alignItems: "center",
-    marginVertical: 20,
   },
   price: {
     fontSize: 24,
