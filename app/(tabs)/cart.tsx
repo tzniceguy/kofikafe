@@ -100,7 +100,7 @@ export default function Page() {
             <View style={styles.cartItem}>
               <View style={styles.productInfo}>
                 <View style={styles.imageContainer}>
-                  <Text>Image</Text> {/* Replace with actual Image component */}
+                  <Text>Image</Text>
                 </View>
                 <View style={styles.productDetails}>
                   <Text style={styles.productName}>Product Name</Text>

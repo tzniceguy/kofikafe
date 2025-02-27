@@ -12,7 +12,7 @@ export default function Index() {
   const router = useRouter();
   return (
     <ImageBackground
-      source={require("../assets/images/get-started.png")}
+      source={require("@/assets/images/home.png")}
       style={styles.background}
       resizeMode="cover"
     >
