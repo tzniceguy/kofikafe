@@ -1,6 +1,6 @@
 import React from "react";
 import MapView from "react-native-maps";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import * as Location from "expo-location";
 
 export default function MapComponent() {
@@ -12,21 +12,21 @@ export default function MapComponent() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MapView
         style={styles.map}
-        provider="google"
         initialRegion={region}
         showsUserLocation={true}
         showsMyLocationButton={true}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   map: {
     width: "100%",
