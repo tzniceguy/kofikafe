@@ -1,10 +1,13 @@
+import { defaultStyles } from "@/constants/styles";
 import React from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 
 export default function Page() {
   return (
     <SafeAreaView>
-      <Text>Liked</Text>
+      <View style={[defaultStyles.container]}>
+        <Text>Liked</Text>
+      </View>
     </SafeAreaView>
   );
 }

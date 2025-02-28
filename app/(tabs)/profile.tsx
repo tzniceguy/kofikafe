@@ -12,6 +12,7 @@ import {
 import Header from "@/components/header";
 import { User, Coffee, LogOut } from "lucide-react-native";
 import { useRouter } from "expo-router";
+import { defaultStyles } from "@/constants/styles";
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Header title="Profile" />
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={defaultStyles.container}>
         {/* User Info Section */}
         <View style={styles.userSection}>
           <View style={styles.avatarContainer}>
@@ -60,7 +61,17 @@ export default function ProfileScreen() {
 
         {/* Logout Button */}
         <View style={styles.logoutSection}>
-          <Pressable style={styles.logoutButton} onPress={handleLogout}>
+          <Pressable
+            style={[
+              defaultStyles.button,
+              {
+                width: "50%",
+                flexDirection: "row",
+                justifyContent: "center",
+              },
+            ]}
+            onPress={handleLogout}
+          >
             <LogOut size={20} color="#fff" />
             <Text style={styles.logoutText}>Log Out</Text>
           </Pressable>
@@ -74,11 +85,6 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  container: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    flexGrow: 1,
   },
   userSection: {
     alignItems: "center",

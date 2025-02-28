@@ -1,3 +1,4 @@
+import colors from "@/constants/colors";
 import { Tabs } from "expo-router";
 import { Home, Heart, ShoppingCart, User } from "lucide-react-native";
 
@@ -5,7 +6,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#000",
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: "#000",
         tabBarStyle: {
           height: 70,

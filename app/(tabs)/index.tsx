@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Settings2 } from "lucide-react-native";
 import ProductCatalogue from "@/components/product-catalogue";
+import { defaultStyles } from "@/constants/styles";
 
 const categories = [
   { id: 1, name: "Americano" },
@@ -18,7 +19,7 @@ const categories = [
 
 export default function SearchScreen() {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[defaultStyles.container, { flex: 1 }]}>
       <View style={styles.upperContainer}>
         <Text style={styles.label}>Location</Text>
         <Text style={styles.location}>Dar Es Salaam, Tanzania</Text>
@@ -48,10 +49,6 @@ export default function SearchScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff", // Consistent white background
-  },
   upperContainer: {
     flex: 0.25, // Slightly smaller to balance layout
     backgroundColor: "#f0f0f0", // Lighter gray for contrast

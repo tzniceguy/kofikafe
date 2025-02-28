@@ -11,15 +11,18 @@ import {
 import Header from "@/components/header";
 import { Edit, NotepadText, Wallet } from "lucide-react-native";
 import MapComponent from "@/components/map-component";
+import { defaultStyles } from "@/constants/styles";
+import { useRouter } from "expo-router";
 
 export default function Page() {
   const [selected, setSelected] = useState("deliver");
   const [showMap, setShowMap] = useState(false);
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <Header title="Order" />
-      <View style={styles.container}>
+      <View style={[defaultStyles.container]}>
         <View style={styles.method}>
           <TouchableOpacity
             style={[
@@ -71,7 +74,10 @@ export default function Page() {
                   <Edit size={16} color="#000" />
                   <Text style={styles.buttonText}>Edit Address</Text>
                 </Pressable>
-                <Pressable style={styles.button}>
+                <Pressable
+                  style={styles.button}
+                  onPress={() => router.push("/(modals)/add-note")}
+                >
                   <NotepadText size={16} color="#000" />
                   <Text style={styles.buttonText}>Add Note</Text>
                 </Pressable>
@@ -131,7 +137,7 @@ export default function Page() {
 
         <View style={styles.paymentSection}>
           <Text style={styles.title}>Payment Method</Text>
-          <View style={styles.bottomSection}>
+          <View style={styles.paymentMethod}>
             <Wallet color="#FFA500" size={24} />
             <View style={styles.walletTextContainer}>
               <Text style={styles.paymentMethodText}>Cash/Wallet</Text>
@@ -140,12 +146,11 @@ export default function Page() {
               </Text>
             </View>
           </View>
-        </View>
-
-        <View style={styles.orderButtonContainer}>
-          <Pressable style={styles.orderButton}>
-            <Text style={styles.orderButtonText}>Place Order</Text>
-          </Pressable>
+          <View style={{ marginTop: 20 }}>
+            <Pressable style={defaultStyles.button}>
+              <Text style={styles.orderButtonText}>Place Order</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -156,10 +161,6 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  container: {
-    paddingHorizontal: 20,
-    flex: 1,
   },
   method: {
     flexDirection: "row",
@@ -272,15 +273,13 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   paymentSection: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
     paddingBottom: 16,
   },
   paymentSummary: {
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
-    marginBottom: 16,
     paddingBottom: 16,
+    marginBottom: 16,
   },
   paymentSummaryHeader: {
     marginBottom: 8,
@@ -292,7 +291,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#333",
   },
-  bottomSection: {
+  paymentMethod: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#F8F8F8",
@@ -308,23 +307,8 @@ const styles = StyleSheet.create({
   },
   paymentAmountText: {
     fontSize: 14,
-    color: "#666",
+    color: "#000",
     marginTop: 4,
-  },
-  orderButtonContainer: {
-    marginTop: 24,
-    paddingBottom: 20,
-  },
-  orderButton: {
-    padding: 16,
-    borderRadius: 12,
-    alignItems: "center",
-    backgroundColor: "#FFA500",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
   },
   orderButtonText: {
     color: "white",
