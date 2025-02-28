@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import Header from "@/components/header";
+import { defaultStyles } from "@/constants/styles";
+import colors from "@/constants/colors";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -25,8 +27,8 @@ export default function ProductDetail() {
 
   if (!productDetail) {
     return (
-      <SafeAreaView>
-        <View style={styles.container}>
+      <SafeAreaView style={{ backgroundColor: "#fff" }}>
+        <View style={defaultStyles.container}>
           <Text style={styles.errorText}>Product not found</Text>
         </View>
       </SafeAreaView>
@@ -34,11 +36,11 @@ export default function ProductDetail() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <Header title="Product Detail" showFavoriteIcon />
-      <View style={styles.container}>
+      <View style={defaultStyles.container}>
         <View style={styles.productCard}>
-          <View>
+          <View style={styles.imageContainer}>
             <Image
               source={productDetail.image}
               style={styles.image}
@@ -50,6 +52,7 @@ export default function ProductDetail() {
             <Text style={styles.category}>{productDetail.category}</Text>
           </View>
         </View>
+
         <View style={styles.productDescription}>
           <View style={styles.descriptionSection}>
             <Text style={styles.sectionTitle}>Description</Text>
@@ -82,13 +85,12 @@ export default function ProductDetail() {
               ))}
             </View>
           </View>
-
-          <View style={styles.bottomSection}>
+          <View style={styles.buySection}>
             <View>
               <Text style={styles.sectionTitle}>Price</Text>
               <Text style={styles.price}>Tsh: {productDetail.price}</Text>
             </View>
-            <Pressable style={styles.buyButton}>
+            <Pressable style={[defaultStyles.button, { width: "60%" }]}>
               <Text style={styles.buyButtonText}>Buy Now</Text>
             </Pressable>
           </View>
@@ -99,15 +101,14 @@ export default function ProductDetail() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
   productCard: {
     borderBottomWidth: 1,
     borderBottomColor: "#000",
     paddingBottom: 20,
+  },
+  imageContainer: {
+    marginBottom: 10,
+    width: "100%",
   },
   image: {
     width: "100%",
@@ -140,8 +141,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   sectionTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 16,
     color: "#000",
   },
   descriptionText: {
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
   },
-  bottomSection: {
+  buySection: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 20,
@@ -188,15 +188,9 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#000",
+    color: colors.primary,
   },
-  buyButton: {
-    backgroundColor: "#000",
-    padding: 18,
 
-    borderRadius: 12,
-    width: "60%",
-  },
   buyButtonText: {
     color: "#fff",
     fontSize: 16,

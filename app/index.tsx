@@ -7,6 +7,7 @@ import {
   Pressable,
 } from "react-native";
 import { useRouter } from "expo-router";
+import colors from "@/constants/colors";
 
 export default function Index() {
   const router = useRouter();
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: "orange",
+    backgroundColor: colors.primary,
     width: "100%",
     padding: 20,
     borderRadius: 10,
