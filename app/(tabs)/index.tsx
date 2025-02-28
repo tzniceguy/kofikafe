@@ -19,7 +19,9 @@ const categories = [
 
 export default function SearchScreen() {
   return (
-    <SafeAreaView style={[defaultStyles.container, { flex: 1 }]}>
+    <SafeAreaView
+      style={[defaultStyles.container, { flex: 1, backgroundColor: "#f0f0f0" }]}
+    >
       <View style={styles.upperContainer}>
         <Text style={styles.label}>Location</Text>
         <Text style={styles.location}>Dar Es Salaam, Tanzania</Text>
@@ -92,7 +94,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   lowerContainer: {
-    flex: 0.75, // Adjusted to complement upperContainer
+    backgroundColor: "#fff",
+    flex: 0.75,
     width: "100%",
     paddingHorizontal: 20,
   },
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    marginBottom: 16,
+    marginVertical: 16,
   },
   categoryButton: {
     paddingVertical: 8,
