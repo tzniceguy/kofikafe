@@ -49,7 +49,10 @@ export default function Page() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Header title="Order" />
-      <ScrollView style={[defaultStyles.container]}>
+      <ScrollView
+        style={[defaultStyles.container]}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.method}>
           <TouchableOpacity
             style={[
