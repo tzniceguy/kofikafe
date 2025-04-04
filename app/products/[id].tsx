@@ -9,6 +9,7 @@ import {
   View,
   Pressable,
   Alert,
+  ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
 import Header from "@/components/header";
@@ -59,7 +60,10 @@ export default function ProductDetail() {
   return (
     <SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
       <Header title="Product Detail" showFavoriteIcon />
-      <View style={defaultStyles.container}>
+      <ScrollView
+        style={defaultStyles.container}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.productCard}>
           <View style={styles.imageContainer}>
             <Image
@@ -119,7 +123,7 @@ export default function ProductDetail() {
             </Pressable>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
