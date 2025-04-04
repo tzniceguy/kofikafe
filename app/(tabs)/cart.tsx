@@ -10,14 +10,41 @@ import {
   ScrollView,
 } from "react-native";
 import Header from "@/components/header";
-import { Edit, NotepadText, Wallet } from "lucide-react-native";
+import { Edit, Minus, NotepadText, Wallet, Plus } from "lucide-react-native";
 import { defaultStyles } from "@/constants/styles";
 import { useRouter } from "expo-router";
+import useCart from "@/lib/cartContext";
 
 export default function Page() {
   const [selected, setSelected] = useState("deliver");
   const [showMap, setShowMap] = useState(false);
   const router = useRouter();
+
+  //get cart state and actions
+  const { items, totalAmount, updateQuantity, removeItem } = useCart();
+
+  //calulae totals
+  const deliveryFee = selected === "deliver" ? 500 : 0;
+  const total = totalAmount + deliveryFee;
+
+  //render empty cart state
+
+  if (items.length === 0) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <Header title="Cart" />
+        <View style={[defaultStyles.container, styles.emptyCart]}>
+          <Text style={styles.emptyCartText}>Your cart is empty</Text>
+          <Pressable
+            style={defaultStyles.button}
+            onPress={() => router.push("/(tabs)")}
+          >
+            <Text style={styles.orderButtonText}>Start Shopping</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -90,33 +117,56 @@ export default function Page() {
         <View style={styles.cartSection}>
           <Text style={styles.title}>Order Items</Text>
           <View style={styles.cartItemContainer}>
-            <View style={styles.cartItem}>
-              <View style={styles.productInfo}>
-                <View style={styles.imageContainer}>
-                  <Text>Image</Text>
+            {items.map((item) => (
+              <View key={item.id} style={styles.cartItem}>
+                <View style={styles.productInfo}>
+                  <View style={styles.imageContainer}>
+                    <Text>{item.name[0]}</Text>
+                  </View>
+                  <View style={styles.productDetails}>
+                    <Text style={styles.productName}>{item.name}</Text>
+                    <Text style={styles.productDescription}>
+                      Size: {item.size}
+                    </Text>
+                    <Text style={styles.productPrice}>Tsh. {item.price}</Text>
+                  </View>
                 </View>
-                <View style={styles.productDetails}>
-                  <Text style={styles.productName}>Product Name</Text>
-                  <Text style={styles.productDescription}>Product</Text>
+                <View style={styles.quantityControls}>
+                  <Pressable
+                    onPress={() => {
+                      if (item.quantity > 1) {
+                        updateQuantity(item.id, item.quantity - 1);
+                      } else {
+                        removeItem(item.id);
+                      }
+                    }}
+                    style={styles.quantityButton}
+                  >
+                    <Minus size={16} color="#000" />
+                  </Pressable>
+                  <Text style={styles.quantityText}>{item.quantity}</Text>
+                  <Pressable
+                    onPress={() => updateQuantity(item.id, item.quantity + 1)}
+                    style={styles.quantityButton}
+                  >
+                    <Plus size={16} color="#000" />
+                  </Pressable>
                 </View>
               </View>
-              <View style={styles.quantityContainer}>
-                <Text style={styles.quantityText}>Quantity</Text>
-              </View>
-            </View>
+            ))}
           </View>
         </View>
-
-        {/* Payment Summary Section */}
-        <View style={styles.paymentSummary}>
+        <View>
           <View style={styles.paymentSummaryHeader}>
             <Text style={styles.title}>Payment Summary</Text>
           </View>
           <View style={styles.paymentDetails}>
-            <Text style={styles.paymentDetailText}>Subtotal: Tsh. 1000</Text>
+            <Text style={styles.paymentDetailText}>
+              Subtotal: Tsh. {totalAmount}
+            </Text>
             {selected === "deliver" && (
               <Text style={styles.paymentDetailText}>
-                Delivery Fee: Tsh. 500
+                Delivery Fee: Tsh. {deliveryFee}
               </Text>
             )}
           </View>
@@ -128,9 +178,7 @@ export default function Page() {
             <Wallet color="#FFA500" size={24} />
             <View style={styles.walletTextContainer}>
               <Text style={styles.paymentMethodText}>Cash/Wallet</Text>
-              <Text style={styles.paymentAmountText}>
-                Tsh. {selected === "deliver" ? "1500" : "1000"}
-              </Text>
+              <Text style={styles.paymentAmountText}>Tsh. {total}</Text>
             </View>
           </View>
           <View style={{ marginTop: 20 }}>
@@ -301,5 +349,32 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "700",
     fontSize: 16,
+  },
+  emptyCart: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
+  },
+  emptyCartText: {
+    fontSize: 18,
+    color: "#666",
+  },
+  quantityControls: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  quantityButton: {
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 4,
+  },
+  productPrice: {
+    fontSize: 14,
+    color: "#FFA500",
+    fontWeight: "600",
+    marginTop: 4,
   },
 });

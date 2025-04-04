@@ -8,11 +8,13 @@ import {
   Image,
   View,
   Pressable,
+  Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
 import Header from "@/components/header";
 import { defaultStyles } from "@/constants/styles";
 import colors from "@/constants/colors";
+import useCart from "@/lib/cartContext";
 
 export default function ProductDetail() {
   const router = useRouter();
@@ -20,9 +22,25 @@ export default function ProductDetail() {
   const productDetail = products.find((product) => product.name === id);
   const [selectedSize, setSelectedSize] = React.useState("M");
 
-  //function to add product to cart
-  const buyNow = () => {
-    router.push(`/cart?product=${id}&size=${selectedSize}`);
+  const { addItem } = useCart();
+
+  const addToCart = () => {
+    if (!productDetail) {
+      Alert.alert("Product not found");
+      return;
+    }
+
+    addItem({
+      id,
+      size: selectedSize,
+      name: productDetail.name,
+    });
+
+    Alert.alert(
+      "Success", // title
+      `${productDetail.name} is added to cart successfully`, // message
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+    );
   };
 
   if (!productDetail) {
@@ -90,8 +108,11 @@ export default function ProductDetail() {
               <Text style={styles.sectionTitle}>Price</Text>
               <Text style={styles.price}>Tsh: {productDetail.price}</Text>
             </View>
-            <Pressable style={[defaultStyles.button, { width: "60%" }]}>
-              <Text style={styles.buyButtonText}>Buy Now</Text>
+            <Pressable
+              style={[defaultStyles.button, { width: "60%" }]}
+              onPress={addToCart}
+            >
+              <Text style={styles.buyButtonText}>add to cart</Text>
             </Pressable>
           </View>
         </View>
