@@ -36,6 +36,20 @@ export default function RootLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="(modals)/auth"
+        options={{
+          presentation: "modal",
+          headerTransparent: true,
+          title: "Sign In/ SignUp",
+          animation: "fade",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <X size={28} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen name="products/[id]" options={{ headerShown: false }} />
     </Stack>
   );
