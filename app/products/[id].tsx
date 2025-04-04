@@ -30,11 +30,14 @@ export default function ProductDetail() {
       return;
     }
 
-    addItem({
+    const cartItem = {
       id,
       size: selectedSize,
       name: productDetail.name,
-    });
+      price: productDetail.price,
+    };
+
+    addItem(cartItem);
 
     Alert.alert(
       "Success", // title
