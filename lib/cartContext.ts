@@ -10,6 +10,7 @@ interface CartItem {
 
 interface CartStore {
   items: CartItem[];
+  price: (item: CartItem) => number;
   totalItems: number;
   totalAmount: number;
   addItem: (item: CartItem) => void;
@@ -22,6 +23,7 @@ const useCart = create<CartStore>((set) => ({
   items: [],
   totalItems: 0,
   totalAmount: 0,
+  price: 0,
 
   addItem: (item) =>
     set((state) => {
